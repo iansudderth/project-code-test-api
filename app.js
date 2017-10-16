@@ -127,6 +127,10 @@ app.post("/poll/change", (req, res) => {
   }
 });
 
+app.get("/", (req, res) => {
+  res.redirect("/poll");
+});
+
 app.listen(port, err => {
   if (err) throw err;
   console.log(`> Ready on port ${port}`);

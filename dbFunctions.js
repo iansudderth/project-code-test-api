@@ -26,7 +26,9 @@ const generateResults = (limit = 10) => {
 const addResponse = response =>
   new Promise((resolve, reject) => {
     if (safeLanguage(response)) {
-      const sanitizedResponse = sanitizeEntry(response);
+      let sanitizedResponse = sanitizeEntry(response);
+      sanitizedResponse = sanitizedResponse.toLowerCase();
+      sanitizedResponse = sanitizedResponse.trim();
       PollResponse.findOne({ response: sanitizedResponse })
         .then(found => {
           console.log(found);

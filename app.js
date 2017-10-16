@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const _ = require("lodash");
 const sanitizer = require("sanitizer");
+const cors = require("cors");
 
 const port = process.env.PORT || 3000;
 const password = process.env.PASSWORD || "password";
@@ -25,6 +26,7 @@ if (_.includes(process.argv, "--seed")) {
 
 const app = express();
 app.use(bodyParser.json());
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.json({

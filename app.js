@@ -6,7 +6,8 @@ const sanitizer = require("sanitizer");
 const cors = require("cors");
 
 const port = process.env.PORT || 3000;
-const password = process.env.PASSWORD || "password";
+const apiPassword = process.env.PASSWORD || "password";
+const adminPassword = process.env.ADMIN || "change-it-up";
 
 const pollSchema = require("./PollResponse");
 const PollResponse = pollSchema.PollResponse;
@@ -62,7 +63,7 @@ app.get("/poll/results", (req, res) => {
 app.post("/poll", (req, res) => {
   const usrPassword = sanitizer.sanitize(req.body.password);
   const usrPollResponse = req.body.response;
-  if (password != usrPassword) {
+  if (apiPassword != usrPassword) {
     res.json({
       error: "incorrect password"
     });
@@ -95,7 +96,7 @@ app.post("/poll", (req, res) => {
 });
 
 app.post("/poll/clear", (req, res) => {
-  if ((req.body.password = "clearall")) {
+  if (req.body.password === adminPassword) {
     clearPoll();
     res.json({
       message: "cleared database"
@@ -108,7 +109,7 @@ app.post("/poll/clear", (req, res) => {
 });
 
 app.post("/poll/change", (req, res) => {
-  if ((req.body.password = "change-it-up")) {
+  if (req.body.password === adminPassword) {
     clearPoll();
     if (req.body.newpoll) {
       resetPoll(req.body.newpoll)

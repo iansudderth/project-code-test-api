@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <h1>Today's Poll</h1>
+    <h1>Today's Poll:</h1>
     <h2 id="poll-question">??</h2>
 
     <!-- Optional JavaScript -->
@@ -26,14 +26,22 @@
 
 
     <script>
+
+        var url = "https://phase2-example-api.herokuapp.com"
+
         function getPoll() {
-            $.get("https://phase2-example-api.herokuapp.com/poll", function (response) {
+            $.get(url + "/poll", function (response) {
                 console.log(response)
+                $("#poll-question").text(response.currentPoll)
             })
         }
 
 
-        function generateResults() { }
+        function generateResults() {
+            $.get(url + "/poll/results", function (response) {
+                console.log(response)
+            })
+        }
 
         function sendResponse() { }
 
@@ -48,7 +56,7 @@
 
         $(document).ready(function () {
             getPoll()
-
+            generateResults()
 
         });
 
